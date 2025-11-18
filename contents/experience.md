@@ -1,21 +1,31 @@
-### **Software Engineer Intern**  
-**January 2025 – June 2025 | ByteDance**  
+### **Software Engineer**  
+**Present | 思朗科技 (Silang Technology)**  
 
-Worked on the development and optimization of large-scale recommendation systems, focusing on algorithm improvements and system efficiency enhancements. Contributed to real-time data processing pipelines and model optimization for personalized content delivery.
+Developing and maintaining computing platforms that schedule and manage self-developed chips for high-performance computing tasks. Focused on optimizing chip resource allocation, improving system throughput, and ensuring efficient task scheduling across distributed chip clusters.
 
-#### Key Contributions:  
-- Developed and optimized recommendation algorithms to enhance user engagement and content relevance.  
-- Designed and implemented real-time data processing workflows to improve model inference efficiency.  
-- Conducted A/B testing and performance analysis to refine recommendation strategies based on user behavior data.  
+#### Key Responsibilities:  
+- Design and implement chip scheduling algorithms to optimize resource utilization and task execution efficiency  
+- Develop platform APIs and services for chip computing management and monitoring  
+- Optimize system performance through profiling, bottleneck analysis, and architectural improvements  
+- Collaborate with hardware teams to integrate new chip features and capabilities into the platform  
+- Build distributed systems for managing large-scale chip computing clusters  
+
+#### Technologies:  
+C/C++, Python, Distributed Systems, Chip Computing, Performance Optimization, System Architecture
 
 ---
 
-### **软件工程师实习生**  
-**2025年1月 – 2025年6月 | 字节跳动**  
+### **软件工程师**  
+**至今 | 思朗科技**  
 
-负责大规模推荐系统的开发与优化，专注于算法改进和系统效率提升。参与实时数据处理管道的构建，并优化模型推理流程，以提升个性化内容推荐效果。
+负责调度自研芯片进行计算的平台开发与维护。专注于优化芯片资源分配、提升系统吞吐量，确保分布式芯片集群的高效任务调度。
 
-#### 主要贡献:  
-- 研发并优化推荐算法，提高用户互动率和内容相关性。  
-- 设计并实现实时数据处理流程，提升模型推理的计算效率。  
-- 进行A/B测试与性能分析，基于用户行为数据优化推荐策略。
+#### 主要职责:  
+- 设计并实现芯片调度算法，优化资源利用率和任务执行效率  
+- 开发平台 API 和服务，用于芯片计算管理和监控  
+- 通过性能分析、瓶颈定位和架构优化提升系统性能  
+- 与硬件团队协作，将新芯片特性集成到平台中  
+- 构建分布式系统，管理大规模芯片计算集群  
+
+#### 技术栈:  
+C/C++, Python, 分布式系统, 芯片计算, 性能优化, 系统架构

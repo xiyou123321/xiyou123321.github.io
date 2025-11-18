@@ -1,0 +1,128 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- 深色背景 -->
+    <linearGradient id="chipBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#000000;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0a1a;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 芯片绿色发光 -->
+    <radialGradient id="chipGlow" cx="50%" cy="50%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:0.5" />
+      <stop offset="70%" style="stop-color:#00ff88;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#00ff88;stop-opacity:0" />
+    </radialGradient>
+    
+    <!-- 青色发光 -->
+    <radialGradient id="cyanGlow" cx="50%" cy="50%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#00d4ff;stop-opacity:0" />
+    </radialGradient>
+    
+    <!-- 芯片网格 -->
+    <pattern id="miniGrid" width="10" height="10" patternUnits="userSpaceOnUse">
+      <rect width="10" height="10" fill="none"/>
+      <path d="M 0,0 L 10,0 M 0,0 L 0,10" stroke="#00ff88" stroke-width="0.2" opacity="0.15"/>
+    </pattern>
+  </defs>
+  
+  <!-- 外圈发光 -->
+  <circle cx="100" cy="100" r="98" fill="url(#chipGlow)"/>
+  
+  <!-- 主背景 -->
+  <circle cx="100" cy="100" r="90" fill="url(#chipBg)"/>
+  
+  <!-- 网格背景 -->
+  <circle cx="100" cy="100" r="90" fill="url(#miniGrid)"/>
+  
+  <!-- 芯片主体 -->
+  <g stroke="#00ff88" stroke-width="1.5" fill="none" opacity="0.6">
+    <!-- 外框 -->
+    <rect x="30" y="30" width="140" height="140" rx="8" stroke-width="2"/>
+    <!-- 内框 -->
+    <rect x="45" y="45" width="110" height="110" rx="5" stroke-width="1.5"/>
+  </g>
+  
+  <!-- 芯片内部结构 -->
+  <g stroke="#00ff88" stroke-width="1" fill="none" opacity="0.5">
+    <!-- 水平线 -->
+    <line x1="55" y1="70" x2="145" y2="70"/>
+    <line x1="55" y1="90" x2="145" y2="90"/>
+    <line x1="55" y1="110" x2="145" y2="110"/>
+    <line x1="55" y1="130" x2="145" y2="130"/>
+    
+    <!-- 垂直线 -->
+    <line x1="75" y1="55" x2="75" y2="145"/>
+    <line x1="100" y1="55" x2="100" y2="145"/>
+    <line x1="125" y1="55" x2="125" y2="145"/>
+  </g>
+  
+  <!-- 芯片引脚（左侧） -->
+  <g fill="#00ff88" opacity="0.5">
+    <rect x="25" y="50" width="8" height="12" rx="1"/>
+    <rect x="25" y="70" width="8" height="12" rx="1"/>
+    <rect x="25" y="90" width="8" height="12" rx="1"/>
+    <rect x="25" y="110" width="8" height="12" rx="1"/>
+    <rect x="25" y="130" width="8" height="12" rx="1"/>
+  </g>
+  
+  <!-- 芯片引脚（右侧） -->
+  <g fill="#00ff88" opacity="0.5">
+    <rect x="167" y="50" width="8" height="12" rx="1"/>
+    <rect x="167" y="70" width="8" height="12" rx="1"/>
+    <rect x="167" y="90" width="8" height="12" rx="1"/>
+    <rect x="167" y="110" width="8" height="12" rx="1"/>
+    <rect x="167" y="130" width="8" height="12" rx="1"/>
+  </g>
+  
+  <!-- 芯片引脚（顶部） -->
+  <g fill="#00d4ff" opacity="0.4">
+    <rect x="60" y="25" width="12" height="8" rx="1"/>
+    <rect x="80" y="25" width="12" height="8" rx="1"/>
+    <rect x="100" y="25" width="12" height="8" rx="1"/>
+    <rect x="120" y="25" width="12" height="8" rx="1"/>
+    <rect x="140" y="25" width="12" height="8" rx="1"/>
+  </g>
+  
+  <!-- 芯片引脚（底部） -->
+  <g fill="#00d4ff" opacity="0.4">
+    <rect x="60" y="167" width="12" height="8" rx="1"/>
+    <rect x="80" y="167" width="12" height="8" rx="1"/>
+    <rect x="100" y="167" width="12" height="8" rx="1"/>
+    <rect x="120" y="167" width="12" height="8" rx="1"/>
+    <rect x="140" y="167" width="12" height="8" rx="1"/>
+  </g>
+  
+  <!-- 芯片核心区域 -->
+  <g stroke="#00ff88" stroke-width="1" fill="none" opacity="0.7">
+    <rect x="70" y="75" width="60" height="50" rx="3" stroke-width="1.5"/>
+    <!-- 核心内部线条 -->
+    <line x1="80" y1="85" x2="120" y2="85"/>
+    <line x1="80" y1="100" x2="120" y2="100"/>
+    <line x1="80" y1="115" x2="120" y2="115"/>
+  </g>
+  
+  <!-- 发光节点 -->
+  <g fill="#00ff88" opacity="0.8">
+    <circle cx="75" cy="70" r="2"/>
+    <circle cx="125" cy="70" r="2"/>
+    <circle cx="75" cy="130" r="2"/>
+    <circle cx="125" cy="130" r="2"/>
+    <circle cx="100" cy="100" r="2.5"/>
+  </g>
+  
+  <!-- 数据流连接 -->
+  <g stroke="#00ff88" stroke-width="1" opacity="0.4" fill="none">
+    <line x1="75" y1="70" x2="100" y2="100"/>
+    <line x1="125" y1="70" x2="100" y2="100"/>
+    <line x1="75" y1="130" x2="100" y2="100"/>
+    <line x1="125" y1="130" x2="100" y2="100"/>
+  </g>
+  
+  <!-- 青色装饰发光 -->
+  <circle cx="100" cy="100" r="85" fill="url(#cyanGlow)"/>
+  
+  <!-- 外圈边框 -->
+  <circle cx="100" cy="100" r="90" fill="none" stroke="#00ff88" stroke-width="2" opacity="0.3"/>
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#00d4ff" stroke-width="1" opacity="0.2"/>
+</svg>

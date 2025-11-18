@@ -1,0 +1,149 @@
+<svg width="1920" height="400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- 深色背景渐变 -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#000000;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#0a0a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 芯片绿色发光 -->
+    <radialGradient id="chipGlow1" cx="30%" cy="40%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#00ff88;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="chipGlow2" cx="70%" cy="60%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#00d4ff;stop-opacity:0" />
+    </radialGradient>
+    
+    <!-- 芯片网格图案 -->
+    <pattern id="chipGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <rect width="20" height="20" fill="none"/>
+      <path d="M 0,0 L 20,0 M 0,0 L 0,20" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
+    </pattern>
+    
+    <!-- 芯片电路图案 -->
+    <pattern id="circuitPattern" width="100" height="100" patternUnits="userSpaceOnUse">
+      <rect width="100" height="100" fill="none"/>
+      <!-- 水平线 -->
+      <line x1="0" y1="20" x2="100" y2="20" stroke="#00ff88" stroke-width="0.5" opacity="0.15"/>
+      <line x1="0" y1="40" x2="100" y2="40" stroke="#00ff88" stroke-width="0.5" opacity="0.15"/>
+      <line x1="0" y1="60" x2="100" y2="60" stroke="#00ff88" stroke-width="0.5" opacity="0.15"/>
+      <line x1="0" y1="80" x2="100" y2="80" stroke="#00ff88" stroke-width="0.5" opacity="0.15"/>
+      <!-- 垂直线 -->
+      <line x1="20" y1="0" x2="20" y2="100" stroke="#00ff88" stroke-width="0.5" opacity="0.15"/>
+      <line x1="40" y1="0" x2="40" y2="100" stroke="#00ff88" stroke-width="0.5" opacity="0.15"/>
+      <line x1="60" y1="0" x2="60" y2="100" stroke="#00ff88" stroke-width="0.5" opacity="0.15"/>
+      <line x1="80" y1="0" x2="80" y2="100" stroke="#00ff88" stroke-width="0.5" opacity="0.15"/>
+    </pattern>
+  </defs>
+  
+  <!-- 主背景 -->
+  <rect width="100%" height="100%" fill="url(#bgGradient)"/>
+  
+  <!-- 芯片发光效果 -->
+  <ellipse cx="30%" cy="40%" rx="400" ry="250" fill="url(#chipGlow1)"/>
+  <ellipse cx="70%" cy="60%" rx="350" ry="200" fill="url(#chipGlow2)"/>
+  
+  <!-- 芯片网格 -->
+  <rect width="100%" height="100%" fill="url(#chipGrid)"/>
+  
+  <!-- 芯片电路图案 -->
+  <rect width="100%" height="100%" fill="url(#circuitPattern)"/>
+  
+  <!-- 芯片结构 - 主要芯片区域 -->
+  <g stroke="#00ff88" stroke-width="1" fill="none" opacity="0.3">
+    <!-- 大型芯片轮廓 -->
+    <rect x="200" y="100" width="300" height="200" rx="5" stroke-width="2"/>
+    <rect x="220" y="120" width="260" height="160" rx="3" stroke-width="1.5"/>
+    
+    <!-- 芯片内部结构 -->
+    <line x1="250" y1="140" x2="450" y2="140"/>
+    <line x1="250" y1="180" x2="450" y2="180"/>
+    <line x1="250" y1="220" x2="450" y2="220"/>
+    <line x1="250" y1="260" x2="450" y2="260"/>
+    
+    <!-- 芯片引脚 -->
+    <rect x="200" y="120" width="5" height="20" fill="#00ff88" opacity="0.4"/>
+    <rect x="200" y="160" width="5" height="20" fill="#00ff88" opacity="0.4"/>
+    <rect x="200" y="200" width="5" height="20" fill="#00ff88" opacity="0.4"/>
+    <rect x="200" y="240" width="5" height="20" fill="#00ff88" opacity="0.4"/>
+    
+    <rect x="495" y="120" width="5" height="20" fill="#00ff88" opacity="0.4"/>
+    <rect x="495" y="160" width="5" height="20" fill="#00ff88" opacity="0.4"/>
+    <rect x="495" y="200" width="5" height="20" fill="#00ff88" opacity="0.4"/>
+    <rect x="495" y="240" width="5" height="20" fill="#00ff88" opacity="0.4"/>
+  </g>
+  
+  <!-- 第二个芯片区域 -->
+  <g stroke="#00d4ff" stroke-width="1" fill="none" opacity="0.25">
+    <rect x="1200" y="80" width="250" height="180" rx="5" stroke-width="2"/>
+    <rect x="1220" y="100" width="210" height="140" rx="3" stroke-width="1.5"/>
+    
+    <line x1="1250" y1="120" x2="1420" y2="120"/>
+    <line x1="1250" y1="150" x2="1420" y2="150"/>
+    <line x1="1250" y1="180" x2="1420" y2="180"/>
+    <line x1="1250" y1="210" x2="1420" y2="210"/>
+    
+    <rect x="1200" y="100" width="4" height="15" fill="#00d4ff" opacity="0.3"/>
+    <rect x="1200" y="130" width="4" height="15" fill="#00d4ff" opacity="0.3"/>
+    <rect x="1200" y="160" width="4" height="15" fill="#00d4ff" opacity="0.3"/>
+    <rect x="1200" y="190" width="4" height="15" fill="#00d4ff" opacity="0.3"/>
+    
+    <rect x="1446" y="100" width="4" height="15" fill="#00d4ff" opacity="0.3"/>
+    <rect x="1446" y="130" width="4" height="15" fill="#00d4ff" opacity="0.3"/>
+    <rect x="1446" y="160" width="4" height="15" fill="#00d4ff" opacity="0.3"/>
+    <rect x="1446" y="190" width="4" height="15" fill="#00d4ff" opacity="0.3"/>
+  </g>
+  
+  <!-- 芯片连接线 -->
+  <g stroke="#00ff88" stroke-width="1.5" opacity="0.2" fill="none">
+    <path d="M 500,200 Q 600,150 700,200 T 900,200"/>
+    <path d="M 500,250 Q 600,300 700,250 T 900,250"/>
+    <path d="M 1000,200 Q 1100,150 1200,200"/>
+    <path d="M 1000,250 Q 1100,300 1200,250"/>
+  </g>
+  
+  <!-- 芯片上的数据流 -->
+  <g stroke="#00ff88" stroke-width="2" opacity="0.4" fill="none">
+    <circle cx="350" cy="200" r="3" fill="#00ff88"/>
+    <circle cx="450" cy="200" r="3" fill="#00ff88"/>
+    <line x1="350" y1="200" x2="450" y2="200"/>
+    
+    <circle cx="1350" cy="140" r="3" fill="#00d4ff"/>
+    <circle cx="1420" cy="140" r="3" fill="#00d4ff"/>
+    <line x1="1350" y1="140" x2="1420" y2="140"/>
+  </g>
+  
+  <!-- 微小的芯片单元 -->
+  <g opacity="0.15">
+    <rect x="600" y="150" width="40" height="30" rx="2" fill="none" stroke="#00ff88" stroke-width="1"/>
+    <rect x="650" y="150" width="40" height="30" rx="2" fill="none" stroke="#00ff88" stroke-width="1"/>
+    <rect x="700" y="150" width="40" height="30" rx="2" fill="none" stroke="#00ff88" stroke-width="1"/>
+    
+    <rect x="800" y="220" width="35" height="25" rx="2" fill="none" stroke="#00d4ff" stroke-width="1"/>
+    <rect x="850" y="220" width="35" height="25" rx="2" fill="none" stroke="#00d4ff" stroke-width="1"/>
+  </g>
+  
+  <!-- 芯片上的发光点 -->
+  <g fill="#00ff88" opacity="0.6">
+    <circle cx="250" cy="200" r="2"/>
+    <circle cx="450" cy="200" r="2"/>
+    <circle cx="350" cy="140" r="1.5"/>
+    <circle cx="350" cy="260" r="1.5"/>
+    
+    <circle cx="1350" cy="140" r="2"/>
+    <circle cx="1420" cy="140" r="2"/>
+    <circle cx="1330" cy="100" r="1.5"/>
+    <circle cx="1330" cy="180" r="1.5"/>
+  </g>
+  
+  <!-- 数据流动画效果（静态表示） -->
+  <g stroke="#00ff88" stroke-width="1" opacity="0.3" fill="none" stroke-dasharray="5,5">
+    <path d="M 300,180 L 400,180"/>
+    <path d="M 300,220 L 400,220"/>
+    <path d="M 1300,120 L 1400,120"/>
+    <path d="M 1300,160 L 1400,160"/>
+  </g>
+</svg>

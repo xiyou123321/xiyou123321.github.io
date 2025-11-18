@@ -2,16 +2,104 @@
 
 
 :root{
-    --h-title-color:#3948d2;
+    --h-title-color: #00d4ff;
+    --tech-primary: #0066ff;
+    --tech-secondary: #7c3aed;
+    --tech-accent: #00d4ff;
+    --tech-dark: #0a0e27;
+    --tech-gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --tech-gradient-2: linear-gradient(135deg, #00d4ff 0%, #0066ff 100%);
+    --tech-gradient-3: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #2d3561 100%);
+}
+
+body {
+    background: var(--tech-dark) !important;
+    color: #e0e0e0;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(0, 102, 255, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(0, 212, 255, 0.02) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* 科技感动画 */
+@keyframes glow {
+    0%, 100% {
+        text-shadow: 0 0 10px var(--tech-accent), 0 0 20px var(--tech-accent), 0 0 30px var(--tech-accent);
+    }
+    50% {
+        text-shadow: 0 0 20px var(--tech-accent), 0 0 30px var(--tech-accent), 0 0 40px var(--tech-accent);
+    }
+}
+
+@keyframes gradient-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 .header {
-    border-bottom: solid 2px var(--bs-blue);
+    border-bottom: solid 2px transparent;
+    background: rgba(10, 14, 39, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.1);
     z-index: 10000;
+    transition: all 0.3s ease;
+}
+
+.header .navbar-brand,
+.header .nav-link {
+    color: #ffffff !important;
+    transition: all 0.3s ease;
+}
+
+.header .nav-link:hover {
+    color: var(--tech-accent) !important;
+    text-shadow: 0 0 10px var(--tech-accent);
 }
 
 .bg-bottom {
-    background-color: var(--h-title-color);
+    background: var(--tech-gradient-3) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.bg-bottom::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(0, 212, 255, 0.1) 50%, transparent 70%);
+    background-size: 200% 200%;
+    animation: gradient-shift 8s ease infinite;
 }
 
 .top-section {
@@ -20,10 +108,43 @@
     background-position: center;
     background-size: cover;
     height: 25rem;
+    overflow: hidden;
+}
+
+.top-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--tech-gradient-3);
+    opacity: 0.9;
+}
+
+.top-section::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(0, 102, 255, 0.1) 0%, transparent 50%);
+    animation: gradient-shift 15s ease infinite;
+    background-size: 200% 200%;
 }
 
 .top-section h2 {
-    font-weight: 400;
+    font-weight: 600;
+    background: var(--tech-gradient-2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: glow 3s ease-in-out infinite;
+    text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
 }
 
 .top-section .top-section-content {
@@ -31,32 +152,87 @@
     z-index: 1;
 }
 
-.top-section:before {
+section header h2 {
+    font-family: "Kanit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+    background: var(--tech-gradient-2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 2.3rem;
+    line-height: 4rem;
+    font-weight: 700;
+    position: relative;
+    display: inline-block;
+}
+
+section header h2::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--tech-gradient-2);
+    border-radius: 2px;
+    box-shadow: 0 0 10px var(--tech-accent);
+}
+
+section .main-body {
+    font-size: 1.3rem;
+    font-weight: 300;
+    line-height: 2.4rem;
+    color: #e0e0e0;
+}
+
+section .main-body code {
+    background: rgba(0, 212, 255, 0.1);
+    color: var(--tech-accent);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    font-family: 'Courier New', monospace;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+}
+
+section .main-body strong {
+    color: var(--tech-accent);
+    font-weight: 600;
+}
+
+.bg-gradient-primary-to-secondary-light {
+    background: var(--tech-gradient-3) !important;
+    position: relative;
+}
+
+.bg-gradient-primary-to-secondary-light::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(0, 212, 255, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.05) 0%, transparent 50%);
+    pointer-events: none;
 }
 
-section header h2{
-    font-family: "Kanit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
-    color: var(--h-title-color);
-    font-size: 2.3rem;
-    line-height: 4rem;
+.bg-gradient-primary-to-secondary-dark {
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #2d3561 100%) !important;
+    position: relative;
 }
 
-section .main-body{
-    font-size: 1.3rem;
-    font-weight: 200;
-    line-height: 2.4rem;
-}
-
-
-.bg-gradient-primary-to-secondary-light {
-    background: linear-gradient(45deg, #fcfcfc, #ffffff) !important;
+.bg-gradient-primary-to-secondary-dark::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(0, 102, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(124, 58, 237, 0.08) 0%, transparent 50%);
+    pointer-events: none;
 }
 
 .bg-gradient-primary-to-secondary-gray {
@@ -96,17 +272,166 @@ section .main-body{
     margin: 0 1.5rem 0 0;
     float: right;
     z-index: 9000;
+    animation: float 6s ease-in-out infinite;
 }
 
 #avatar img {
     height: max(130px,min(200px,calc(100vw/6)));
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 
+        0 0 20px rgba(0, 212, 255, 0.5),
+        0 0 40px rgba(0, 102, 255, 0.3),
+        0 0 60px rgba(124, 58, 237, 0.2);
+    border: 3px solid rgba(0, 212, 255, 0.3);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(124, 58, 237, 0.1));
+}
+
+#avatar img:hover {
+    box-shadow: 
+        0 0 30px rgba(0, 212, 255, 0.8),
+        0 0 60px rgba(0, 102, 255, 0.5),
+        0 0 90px rgba(124, 58, 237, 0.3);
+    transform: scale(1.05);
 }
 
 @media screen and (max-width: 991px) {
     #avatar {
         margin: 0;
     }
+}
+
+/* 科技感滚动条 */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--tech-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--tech-gradient-2);
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--tech-gradient-1);
+}
+
+/* 链接科技感样式 */
+a {
+    color: var(--tech-accent);
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ffffff;
+    text-shadow: 0 0 10px var(--tech-accent);
+}
+
+/* 代码块增强 */
+code {
+    transition: all 0.3s ease;
+}
+
+code:hover {
+    background: rgba(0, 212, 255, 0.2) !important;
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.4) !important;
+}
+
+/* 列表项科技感 */
+.main-body ul li::marker {
+    color: var(--tech-accent);
+}
+
+.main-body ul li {
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.main-body ul li:hover {
+    padding-left: 5px;
+    color: #ffffff;
+}
+
+/* Footer 科技感样式 */
+footer {
+    position: relative;
+    z-index: 1;
+}
+
+footer .text-white-50 {
+    color: rgba(224, 224, 224, 0.8) !important;
+}
+
+footer a {
+    color: var(--tech-accent) !important;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    position: relative;
+}
+
+footer a::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--tech-gradient-2);
+    transition: width 0.3s ease;
+}
+
+footer a:hover {
+    color: #ffffff !important;
+    text-shadow: 0 0 10px var(--tech-accent);
+}
+
+footer a:hover::after {
+    width: 100%;
+}
+
+footer span {
+    color: rgba(224, 224, 224, 0.5);
+}
+
+/* 导航栏按钮科技感样式 */
+.navbar-toggler {
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    color: #ffffff;
+    background: rgba(0, 212, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.navbar-toggler:hover {
+    border-color: var(--tech-accent);
+    background: rgba(0, 212, 255, 0.2);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0.25rem rgba(0, 212, 255, 0.25);
+}
+
+/* 确保所有文本在深色背景下清晰可见 */
+.container {
+    position: relative;
+    z-index: 1;
+}
+
+/* 标题和副标题增强 */
+#top-section-bg-text {
+    font-weight: 700 !important;
+    letter-spacing: 2px;
+}
+
+#home-subtitle {
+    color: var(--tech-accent) !important;
+    font-weight: 600;
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
 }
 
 

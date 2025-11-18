@@ -1,20 +1,20 @@
-[![XX](https://img.shields.io/badge/XX-github-blue?logo=github)](https://github.com/XX)
+[![GitHub](https://img.shields.io/badge/GitHub-peng.liu-black?logo=github)](https://github.com/xiyou123321)
 
-I'm currently pursuing a Master's degree in XX at the Department of XX, XX University, XX.
+I'm a **Software Engineer** at **思朗科技 (Silang Technology)**, specializing in platform development for scheduling and computing with self-developed chips.
+
+#### Current Position  
+**Software Engineer** | 思朗科技 (Silang Technology)  
+• Developing computing platforms that schedule and manage self-developed chips  
+• Focused on high-performance computing and chip resource optimization  
 
 #### Email  
-<code>XX@XX.XX</code>  
-<code>XX@XX.XX</code>
+<code>peng.liu@silangtech.com</code>  
 
-#### Education  
-**XX University**, Master of XX (XX – XX)  
-• GPA: XX/XX  
+#### Skills & Expertise  
+• **Platform Development**: Chip scheduling and computing platform architecture  
+• **Software Engineering**: System design, optimization, and performance tuning  
+• **Chip Computing**: Self-developed chip integration and resource management  
+• **High-Performance Computing**: Distributed systems and parallel computing  
 
-**XX University**, Exchange student <br>  
-• As a XX, represented my college as an outstanding student for a XX exchange program.  
-
-**XX University**, Honours Bachelor of XX (XX – XX)  
-• GPA: XX/XX (top XX%)  
-
-#### Research Interests  
-XX, XX, XX, XX.
+#### Interests  
+Chip computing, distributed systems, platform architecture, performance optimization.
