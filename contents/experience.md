@@ -1,5 +1,5 @@
 ### **Software Engineer**  
-**Present | 思朗科技 (SMART LOGIC)**  
+**Present | 思朗科技 (Smart Logic)**  
 
 Developing and maintaining computing platforms that schedule and manage self-developed chips for high-performance computing tasks. Focused on optimizing chip resource allocation, improving system throughput, and ensuring efficient task scheduling across distributed chip clusters.
 

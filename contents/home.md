@@ -1,9 +1,9 @@
 [![GitHub](https://img.shields.io/badge/GitHub-peng.liu-black?logo=github)](https://github.com/xiyou123321)
 
-I'm a **Software Engineer** at **思朗科技 (SMART LOGIC)**, specializing in platform development for scheduling and computing with self-developed chips.
+I'm a **Software Engineer** at **思朗科技 (Smart Logic)**, specializing in platform development for scheduling and computing with self-developed chips.
 
 #### Current Position  
-**Software Engineer** | 思朗科技 (SMART LOGIC)  
+**Software Engineer** | 思朗科技 (Smart Logic)  
 • Developing computing platforms that schedule and manage self-developed chips  
 • Focused on high-performance computing and chip resource optimization  
 

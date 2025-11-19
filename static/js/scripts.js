@@ -183,13 +183,17 @@ function createTechCityBackground() {
     canvas.style.left = '0';
     canvas.style.width = '100%';
     canvas.style.height = '100%';
-    canvas.style.zIndex = '-2';
+    canvas.style.zIndex = '-999';
     canvas.style.pointerEvents = 'none';
     canvas.style.background = '#0a0e27';
     // 插入到 body 最前面，确保在最底层
     document.body.insertBefore(canvas, document.body.firstChild);
 
     const ctx = canvas.getContext('2d');
+    if (!ctx) {
+        console.error('Canvas context not available');
+        return;
+    }
     let animationId;
 
     function resizeCanvas() {
@@ -305,11 +309,16 @@ function createTechCityBackground() {
 // 创建鼠标点击效果
 function createClickEffect() {
     document.addEventListener('click', (e) => {
+        // 阻止默认行为（如果有的话）
+        // e.preventDefault();
+        
         // 创建涟漪效果
         const ripple = document.createElement('div');
         ripple.className = 'click-ripple';
         ripple.style.left = e.clientX + 'px';
         ripple.style.top = e.clientY + 'px';
+        ripple.style.position = 'fixed';
+        ripple.style.zIndex = '99999';
         document.body.appendChild(ripple);
 
         // 创建粒子爆炸效果
@@ -326,6 +335,8 @@ function createClickEffect() {
             
             particle.style.left = e.clientX + 'px';
             particle.style.top = e.clientY + 'px';
+            particle.style.position = 'fixed';
+            particle.style.zIndex = '99999';
             document.body.appendChild(particle);
 
             particles.push({
