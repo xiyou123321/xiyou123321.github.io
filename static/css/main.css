@@ -66,7 +66,7 @@ body::before {
 
 .header {
     border-bottom: solid 2px transparent;
-    background: rgba(10, 14, 39, 0.95);
+    background: rgba(10, 14, 39, 0.95) !important;
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 20px rgba(0, 212, 255, 0.1);
     z-index: 10000;
@@ -77,11 +77,37 @@ body::before {
 .header .nav-link {
     color: #ffffff !important;
     transition: all 0.3s ease;
+    font-weight: 500;
 }
 
 .header .nav-link:hover {
     color: var(--tech-accent) !important;
     text-shadow: 0 0 10px var(--tech-accent);
+}
+
+/* 确保导航栏折叠菜单可见 */
+.header .navbar-collapse {
+    background: rgba(10, 14, 39, 0.98) !important;
+}
+
+.header .navbar-nav {
+    background: transparent !important;
+}
+
+/* 确保导航栏在所有屏幕尺寸下都可见 */
+@media (max-width: 991.98px) {
+    .header .navbar-collapse {
+        background: rgba(10, 14, 39, 0.98) !important;
+        border-top: 1px solid rgba(0, 212, 255, 0.2);
+        margin-top: 0.5rem;
+        padding-top: 1rem;
+    }
+    
+    .header .nav-link {
+        padding: 0.75rem 1rem !important;
+        color: #ffffff !important;
+        border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+    }
 }
 
 .bg-bottom {
