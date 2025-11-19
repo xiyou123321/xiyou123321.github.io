@@ -170,16 +170,24 @@ function createMouseFollower() {
 
 // 创建动态科技城市背景
 function createTechCityBackground() {
-    const canvas = document.createElement('canvas');
+    // 检查是否已存在 Canvas
+    let canvas = document.getElementById('tech-city-canvas');
+    if (canvas) {
+        canvas.remove();
+    }
+    
+    canvas = document.createElement('canvas');
     canvas.id = 'tech-city-canvas';
     canvas.style.position = 'fixed';
     canvas.style.top = '0';
     canvas.style.left = '0';
     canvas.style.width = '100%';
     canvas.style.height = '100%';
-    canvas.style.zIndex = '-1';
+    canvas.style.zIndex = '-2';
     canvas.style.pointerEvents = 'none';
-    document.body.appendChild(canvas);
+    canvas.style.background = '#0a0e27';
+    // 插入到 body 最前面，确保在最底层
+    document.body.insertBefore(canvas, document.body.firstChild);
 
     const ctx = canvas.getContext('2d');
     let animationId;
