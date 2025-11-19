@@ -16,21 +16,23 @@ body {
     background: var(--tech-dark) !important;
     color: #e0e0e0;
     position: relative;
+    overflow-x: hidden;
 }
 
+/* 移除旧的背景渐变，使用Canvas背景 */
 body::before {
-    content: "";
+    display: none;
+}
+
+/* 确保Canvas背景在最底层 */
+#tech-city-canvas {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: 
-        radial-gradient(circle at 10% 20%, rgba(0, 102, 255, 0.03) 0%, transparent 50%),
-        radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.03) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(0, 212, 255, 0.02) 0%, transparent 70%);
-    pointer-events: none;
     z-index: -1;
+    pointer-events: none;
 }
 
 /* 科技感动画 */
@@ -480,7 +482,7 @@ footer span {
     text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
 }
 
-/* 鼠标跟随效果 */
+/* 鼠标跟随效果 - 主跟随元素 */
 #mouse-follower {
     position: fixed;
     width: 20px;
@@ -494,7 +496,25 @@ footer span {
     pointer-events: none;
     z-index: 9999;
     opacity: 0;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: screen;
+}
+
+/* 鼠标跟随粒子 */
+.mouse-particle {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.8) 0%, transparent 70%);
+    box-shadow: 
+        0 0 10px rgba(0, 212, 255, 0.6),
+        0 0 20px rgba(0, 212, 255, 0.3);
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease, width 0.3s ease, height 0.3s ease;
     transform: translate(-50%, -50%);
     mix-blend-mode: screen;
 }
@@ -511,6 +531,15 @@ footer span {
     animation: pulse 1.5s ease-in-out infinite;
 }
 
+.mouse-particle.hover {
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle, rgba(0, 212, 255, 1) 0%, rgba(0, 102, 255, 0.6) 50%, transparent 80%);
+    box-shadow: 
+        0 0 15px rgba(0, 212, 255, 0.8),
+        0 0 30px rgba(0, 212, 255, 0.5);
+}
+
 /* 脉冲动画 */
 @keyframes pulse {
     0%, 100% {
@@ -523,9 +552,52 @@ footer span {
     }
 }
 
+/* 鼠标点击涟漪效果 */
+.click-ripple {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--tech-accent);
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        width: 10px;
+        height: 10px;
+        opacity: 1;
+        box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.7);
+    }
+    100% {
+        width: 200px;
+        height: 200px;
+        opacity: 0;
+        box-shadow: 0 0 0 50px rgba(0, 212, 255, 0);
+    }
+}
+
+/* 鼠标点击粒子爆炸效果 */
+.click-particle {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--tech-accent);
+    box-shadow: 0 0 10px var(--tech-accent);
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}
+
 /* 移动设备上隐藏鼠标跟随效果 */
 @media (hover: none) and (pointer: coarse) {
-    #mouse-follower {
+    #mouse-follower,
+    .mouse-particle {
         display: none;
     }
 }
