@@ -261,6 +261,90 @@ section .main-body strong {
     font-weight: 600;
 }
 
+/* 技能圆圈展示 - 炫酷风格 */
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 2rem 0;
+    justify-content: center;
+}
+
+.skill-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.2) 0%, rgba(0, 102, 255, 0.1) 100%);
+    border: 2px solid var(--tech-accent);
+    color: var(--tech-accent);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 
+        0 0 20px rgba(0, 212, 255, 0.3),
+        inset 0 0 20px rgba(0, 212, 255, 0.1);
+    animation: skill-glow 3s ease-in-out infinite;
+}
+
+.skill-badge::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 50%;
+    background: var(--tech-gradient-2);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+    filter: blur(10px);
+}
+
+.skill-badge:hover {
+    transform: scale(1.15) rotate(5deg);
+    box-shadow: 
+        0 0 30px rgba(0, 212, 255, 0.6),
+        0 0 60px rgba(0, 102, 255, 0.4),
+        inset 0 0 30px rgba(0, 212, 255, 0.2);
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+.skill-badge:hover::before {
+    opacity: 0.8;
+}
+
+@keyframes skill-glow {
+    0%, 100% {
+        box-shadow: 
+            0 0 20px rgba(0, 212, 255, 0.3),
+            inset 0 0 20px rgba(0, 212, 255, 0.1);
+    }
+    50% {
+        box-shadow: 
+            0 0 30px rgba(0, 212, 255, 0.5),
+            inset 0 0 30px rgba(0, 212, 255, 0.2);
+    }
+}
+
+/* 技能圆圈延迟动画 */
+.skill-badge:nth-child(1) { animation-delay: 0s; }
+.skill-badge:nth-child(2) { animation-delay: 0.3s; }
+.skill-badge:nth-child(3) { animation-delay: 0.6s; }
+.skill-badge:nth-child(4) { animation-delay: 0.9s; }
+.skill-badge:nth-child(5) { animation-delay: 1.2s; }
+.skill-badge:nth-child(6) { animation-delay: 1.5s; }
+.skill-badge:nth-child(7) { animation-delay: 1.8s; }
+.skill-badge:nth-child(8) { animation-delay: 2.1s; }
+.skill-badge:nth-child(9) { animation-delay: 2.4s; }
+
 .bg-gradient-primary-to-secondary-light {
     background: transparent !important;
     position: relative;

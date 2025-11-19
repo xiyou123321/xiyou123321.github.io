@@ -1,20 +1,26 @@
 [![GitHub](https://img.shields.io/badge/GitHub-peng.liu-black?logo=github)](https://github.com/xiyou123321)
 
-I'm a **Software Engineer** at **思朗科技 (Smart Logic)**, specializing in platform development for scheduling and computing with self-developed chips.
+I'm a **Software Engineer** crafting high-performance computing platforms and distributed systems. I build things that scale, optimize, and perform.
 
 #### Current Position  
-**Software Engineer** | 思朗科技 (Smart Logic)  
-• Developing computing platforms that schedule and manage self-developed chips  
-• Focused on high-performance computing and chip resource optimization  
+**Software Engineer** | Smart Logic Technology  
+Building software for cutting-edge computing platforms.
 
-#### Email  
-<code>peng.liu@silangtech.com</code>  
+#### Contact  
+<code>peng.liu@silangtech.com</code>
 
-#### Skills & Expertise  
-• **Platform Development**: Chip scheduling and computing platform architecture  
-• **Software Engineering**: System design, optimization, and performance tuning  
-• **Chip Computing**: Self-developed chip integration and resource management  
-• **High-Performance Computing**: Distributed systems and parallel computing  
+#### Tech Stack
+<div class="skills-container">
+  <span class="skill-badge">C</span>
+  <span class="skill-badge">Shell</span>
+  <span class="skill-badge">HPC</span>
+  <span class="skill-badge">slurm</span>
+  <span class="skill-badge">K8s</span>
+  <span class="skill-badge">MPI</span>
+  <span class="skill-badge">spack</span>
+  <span class="skill-badge">make</span>
+  <span class="skill-badge">gdb</span>
+</div>
 
-#### Interests  
-Chip computing, distributed systems, platform architecture, performance optimization.
+#### What I Do
+High-performance computing, distributed systems, platform architecture, performance optimization, and building cool stuff that works at scale.

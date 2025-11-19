@@ -3,7 +3,19 @@ const config_file = 'config.yml'
 const section_names = ['home', 'experience'];
 
 
+// 立即创建背景和效果（不等待DOMContentLoaded）
+(function() {
+    // 创建动态科技城市背景 - 立即执行
+    createTechCityBackground();
+    
+    // 鼠标点击效果 - 立即绑定
+    createClickEffect();
+})();
+
 window.addEventListener('DOMContentLoaded', event => {
+
+    // 鼠标跟随效果
+    createMouseFollower();
 
     // Activate Bootstrap scrollspy on the main nav element
     const mainNav = document.body.querySelector('#mainNav');
@@ -59,15 +71,6 @@ window.addEventListener('DOMContentLoaded', event => {
             })
             .catch(error => console.log(error));
     })
-
-    // 鼠标跟随效果
-    createMouseFollower();
-    
-    // 创建动态科技城市背景
-    createTechCityBackground();
-    
-    // 鼠标点击效果
-    createClickEffect();
 
 });
 
@@ -170,31 +173,38 @@ function createMouseFollower() {
 
 // 创建动态科技城市背景
 function createTechCityBackground() {
-    // 检查是否已存在 Canvas
-    let canvas = document.getElementById('tech-city-canvas');
-    if (canvas) {
-        canvas.remove();
-    }
-    
-    canvas = document.createElement('canvas');
-    canvas.id = 'tech-city-canvas';
-    canvas.style.position = 'fixed';
-    canvas.style.top = '0';
-    canvas.style.left = '0';
-    canvas.style.width = '100%';
-    canvas.style.height = '100%';
-    canvas.style.zIndex = '-999';
-    canvas.style.pointerEvents = 'none';
-    canvas.style.background = '#0a0e27';
-    // 插入到 body 最前面，确保在最底层
-    document.body.insertBefore(canvas, document.body.firstChild);
+    // 等待body准备好
+    function initCanvas() {
+        if (!document.body) {
+            setTimeout(initCanvas, 10);
+            return;
+        }
+        
+        // 检查是否已存在 Canvas
+        let canvas = document.getElementById('tech-city-canvas');
+        if (canvas) {
+            canvas.remove();
+        }
+        
+        canvas = document.createElement('canvas');
+        canvas.id = 'tech-city-canvas';
+        canvas.style.position = 'fixed';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+        canvas.style.zIndex = '-999';
+        canvas.style.pointerEvents = 'none';
+        canvas.style.background = '#0a0e27';
+        // 插入到 body 最前面，确保在最底层
+        document.body.insertBefore(canvas, document.body.firstChild);
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) {
-        console.error('Canvas context not available');
-        return;
-    }
-    let animationId;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+            console.error('Canvas context not available');
+            return;
+        }
+        let animationId;
 
     function resizeCanvas() {
         canvas.width = window.innerWidth;
@@ -304,6 +314,9 @@ function createTechCityBackground() {
     }
 
     draw();
+    }
+    
+    initCanvas();
 }
 
 // 创建鼠标点击效果
