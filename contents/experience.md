@@ -1,5 +1,5 @@
 ### **Software Engineer**  
-**Present | 思朗科技 (Silang Technology)**  
+**Present | 思朗科技 (SMART LOGIC)**  
 
 Developing and maintaining computing platforms that schedule and manage self-developed chips for high-performance computing tasks. Focused on optimizing chip resource allocation, improving system throughput, and ensuring efficient task scheduling across distributed chip clusters.
 
@@ -11,7 +11,7 @@ Developing and maintaining computing platforms that schedule and manage self-dev
 - Build distributed systems for managing large-scale chip computing clusters  
 
 #### Technologies:  
-C/C++, Python, Distributed Systems, Chip Computing, Performance Optimization, System Architecture
+C/C++, Shell, Python, Distributed Systems, Chip Computing, Performance Optimization, System Architecture
 
 ---
 
@@ -28,4 +28,4 @@ C/C++, Python, Distributed Systems, Chip Computing, Performance Optimization, Sy
 - 构建分布式系统，管理大规模芯片计算集群  
 
 #### 技术栈:  
-C/C++, Python, 分布式系统, 芯片计算, 性能优化, 系统架构
+C/C++, Shell, Python, 分布式系统, 芯片计算, 性能优化, 系统架构
