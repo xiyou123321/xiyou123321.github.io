@@ -3,19 +3,19 @@ const config_file = 'config.yml'
 const section_names = ['home', 'experience'];
 
 
-// 立即创建背景和效果（不等待DOMContentLoaded）
+// 立即创建背景和效果（不等待 DOMContentLoaded）
 (function() {
-    // 创建动态科技城市背景 - 立即执行
-    createTechCityBackground();
-    
-    // 鼠标点击效果 - 立即绑定
-    createClickEffect();
+    createMatrixRain();      // Matrix 数字雨背景
+    createClickEffect();     // 点击涟漪
 })();
 
 window.addEventListener('DOMContentLoaded', event => {
 
-    // 鼠标跟随效果
-    createMouseFollower();
+    // 终端启动序列打字机效果
+    typeBootSequence();
+
+    // 鼠标十字准星（克制的终端风指针）
+    createCrosshair();
 
     // Activate Bootstrap scrollspy on the main nav element
     const mainNav = document.body.querySelector('#mainNav');
@@ -39,164 +39,157 @@ window.addEventListener('DOMContentLoaded', event => {
         });
     });
 
-
-    // Yaml
+    // Yaml 配置加载
     fetch(content_dir + config_file)
         .then(response => response.text())
         .then(text => {
             const yml = jsyaml.load(text);
             Object.keys(yml).forEach(key => {
                 try {
-                    document.getElementById(key).innerHTML = yml[key];
+                    const el = document.getElementById(key);
+                    if (el) el.innerHTML = yml[key];
                 } catch {
                     console.log("Unknown id and value: " + key + "," + yml[key].toString())
                 }
-
-            })
+            });
         })
         .catch(error => console.log(error));
 
-
-    // Marked
-    marked.use({ mangle: false, headerIds: false })
+    // Markdown 内容加载
+    marked.use({ mangle: false, headerIds: false });
     section_names.forEach((name, idx) => {
         fetch(content_dir + name + '.md')
             .then(response => response.text())
             .then(markdown => {
                 const html = marked.parse(markdown);
-                document.getElementById(name + '-md').innerHTML = html;
+                const target = document.getElementById(name + '-md');
+                if (target) target.innerHTML = html;
             }).then(() => {
-                // MathJax
-                MathJax.typeset();
+                if (window.MathJax) MathJax.typeset();
             })
             .catch(error => console.log(error));
-    })
+    });
 
 });
 
-// 创建鼠标跟随效果（增强版 - 多个粒子）
-function createMouseFollower() {
-    // 创建主跟随元素
-    const follower = document.createElement('div');
-    follower.id = 'mouse-follower';
-    document.body.appendChild(follower);
 
-    // 创建多个跟随粒子
-    const particles = [];
-    const particleCount = 8;
-    
-    for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'mouse-particle';
-        particle.style.setProperty('--delay', i * 0.05);
-        document.body.appendChild(particle);
-        particles.push({
-            element: particle,
-            x: 0,
-            y: 0,
-            targetX: 0,
-            targetY: 0
-        });
+// ============================================================
+// 终端启动序列：打字机逐字输出
+// ============================================================
+function typeBootSequence() {
+    const output = document.getElementById('terminal-output');
+    if (!output) return;
+
+    const cursor = '<span class="term-cursor">&#9608;</span>';
+
+    // 启动序列脚本：每一项是一行 {prompt, cmd/output, cls(样式类)}
+    const lines = [
+        { text: 'peng.liu@hpc', cls: 'term-prompt' },
+        { text: ':~$ ',          cls: 'term-prompt' },
+        { text: 'whoami',        cls: 'term-cmd',    nl: true },
+        { text: '> Software Engineer @ SmartLogic',  cls: 'term-output', nl: true },
+        { text: 'peng.liu@hpc',  cls: 'term-prompt' },
+        { text: ':~$ ',          cls: 'term-prompt' },
+        { text: 'cat /etc/skills', cls: 'term-cmd',  nl: true },
+        { text: 'C  C++  HPC  slurm  K8s  MPI  spack  make  gdb', cls: 'term-accent', nl: true },
+        { text: 'peng.liu@hpc',  cls: 'term-prompt' },
+        { text: ':~$ ',          cls: 'term-prompt' },
+        { text: './profile --boot', cls: 'term-cmd', nl: true },
+        { text: 'booting ',      cls: 'term-output' },
+        { text: '[',             cls: 'term-output' },
+        { text: '################', cls: 'term-bar-fill' },
+        { text: '] 100%',        cls: 'term-output', nl: true },
+        { text: 'peng.liu@hpc',  cls: 'term-prompt' },
+        { text: ':~$ ',          cls: 'term-prompt' },
+        { text: '_',             cls: 'term-cmd',    isCursor: true },
+    ];
+
+    // 把每行拆成字符，串行打出
+    output.innerHTML = '';
+    let lineIdx = 0;
+    let charIdx = 0;
+    let currentLineSpan = null;
+    let lineBuffer = '';
+
+    function step() {
+        // 还没开始或上一行已打完，开始新一行
+        if (currentLineSpan === null) {
+            if (lineIdx >= lines.length) {
+                // 全部完成，最后留个闪烁光标
+                output.innerHTML += cursor;
+                return;
+            }
+            const line = lines[lineIdx];
+            lineBuffer = '';
+            currentLineSpan = document.createElement('span');
+            currentLineSpan.className = line.cls;
+            output.appendChild(currentLineSpan);
+            charIdx = 0;
+        }
+
+        const line = lines[lineIdx];
+
+        // 行结束
+        if (charIdx >= line.text.length) {
+            // 行尾换行
+            if (line.nl) {
+                output.appendChild(document.createElement('br'));
+            }
+            // 这是带光标的最后一步
+            if (line.isCursor) {
+                currentLineSpan.remove();
+                output.innerHTML += cursor;
+                lineIdx = lines.length;   // 结束
+                currentLineSpan = null;
+                return;
+            }
+            currentLineSpan = null;
+            lineIdx++;
+            setTimeout(step, 120);   // 行间停顿
+            return;
+        }
+
+        // 逐字打出
+        lineBuffer += line.text[charIdx];
+        currentLineSpan.textContent = lineBuffer;
+        charIdx++;
+
+        // 打字速度：命令行快一点，输出稍慢
+        const delay = line.cls === 'term-cmd' ? 55 : 22;
+        setTimeout(step, delay);
     }
 
-    let mouseX = 0;
-    let mouseY = 0;
-    let followerX = 0;
-    let followerY = 0;
-    let isMouseMoving = false;
-
-    // 鼠标移动事件
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        isMouseMoving = true;
-        follower.style.opacity = '1';
-        
-        // 更新所有粒子的目标位置
-        particles.forEach((particle, index) => {
-            const angle = (index / particleCount) * Math.PI * 2;
-            const radius = 30 + index * 5;
-            particle.targetX = mouseX + Math.cos(angle) * radius;
-            particle.targetY = mouseY + Math.sin(angle) * radius;
-            particle.element.style.opacity = '1';
-        });
-    });
-
-    // 鼠标离开窗口
-    document.addEventListener('mouseleave', () => {
-        isMouseMoving = false;
-        follower.style.opacity = '0';
-        particles.forEach(particle => {
-            particle.element.style.opacity = '0';
-        });
-    });
-
-    // 平滑跟随动画
-    function animateFollower() {
-        // 主跟随元素
-        const dx = mouseX - followerX;
-        const dy = mouseY - followerY;
-        followerX += dx * 0.1;
-        followerY += dy * 0.1;
-        follower.style.left = followerX + 'px';
-        follower.style.top = followerY + 'px';
-
-        // 粒子跟随
-        particles.forEach((particle, index) => {
-            const dx = particle.targetX - particle.x;
-            const dy = particle.targetY - particle.y;
-            particle.x += dx * (0.08 + index * 0.01);
-            particle.y += dy * (0.08 + index * 0.01);
-            particle.element.style.left = particle.x + 'px';
-            particle.element.style.top = particle.y + 'px';
-        });
-
-        requestAnimationFrame(animateFollower);
-    }
-
-    // 开始动画
-    animateFollower();
-
-    // 鼠标悬停在可交互元素上时的效果
-    const interactiveElements = document.querySelectorAll('a, button, .nav-link, input, textarea, select');
-    interactiveElements.forEach(element => {
-        element.addEventListener('mouseenter', () => {
-            follower.classList.add('hover');
-            particles.forEach(p => p.element.classList.add('hover'));
-        });
-        element.addEventListener('mouseleave', () => {
-            follower.classList.remove('hover');
-            particles.forEach(p => p.element.classList.remove('hover'));
-        });
-    });
+    // 稍微延迟启动，等渲染稳定
+    setTimeout(step, 400);
 }
 
-// 创建动态科技城市背景
-function createTechCityBackground() {
-    // 等待body准备好
+
+// ============================================================
+// Matrix 数字雨
+// ============================================================
+function createMatrixRain() {
     function initCanvas() {
         if (!document.body) {
             setTimeout(initCanvas, 10);
             return;
         }
-        
-        // 检查是否已存在 Canvas
+
+        // 移除旧的 canvas
         let canvas = document.getElementById('tech-city-canvas');
-        if (canvas) {
-            canvas.remove();
-        }
-        
+        if (canvas) canvas.remove();
+        canvas = document.getElementById('matrix-canvas');
+        if (canvas) canvas.remove();
+
         canvas = document.createElement('canvas');
-        canvas.id = 'tech-city-canvas';
+        canvas.id = 'matrix-canvas';
         canvas.style.position = 'fixed';
         canvas.style.top = '0';
         canvas.style.left = '0';
         canvas.style.width = '100%';
         canvas.style.height = '100%';
-        canvas.style.zIndex = '-999';
+        canvas.style.zIndex = '-2';
         canvas.style.pointerEvents = 'none';
-        canvas.style.background = '#0a0e27';
-        // 插入到 body 最前面，确保在最底层
+        canvas.style.background = '#0a0a0a';
         document.body.insertBefore(canvas, document.body.firstChild);
 
         const ctx = canvas.getContext('2d');
@@ -204,128 +197,95 @@ function createTechCityBackground() {
             console.error('Canvas context not available');
             return;
         }
-        let animationId;
 
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+        // 数字雨字符集（日文片假名 + 数字 + 符号，经典 Matrix 感）
+        const chars = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピ0123456789{}[]<>/$#&%@'.split('');
 
-    // 科技城市建筑
-    const buildings = [];
-    const buildingCount = 30;
+        let fontSize = 16;
+        let columns = 0;
+        let drops = [];   // 每列当前的 Y 位置
 
-    for (let i = 0; i < buildingCount; i++) {
-        buildings.push({
-            x: (i / buildingCount) * canvas.width + Math.random() * 50,
-            width: 20 + Math.random() * 40,
-            height: 100 + Math.random() * (canvas.height * 0.6),
-            speed: 0.1 + Math.random() * 0.2,
-            windows: Math.floor(3 + Math.random() * 8),
-            color: `hsl(${200 + Math.random() * 60}, 70%, ${40 + Math.random() * 20}%)`
-        });
-    }
-
-    // 粒子系统
-    const particles = [];
-    for (let i = 0; i < 50; i++) {
-        particles.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            vx: (Math.random() - 0.5) * 0.5,
-            vy: (Math.random() - 0.5) * 0.5,
-            size: Math.random() * 2 + 1,
-            opacity: Math.random() * 0.5 + 0.2
-        });
-    }
-
-    function draw() {
-        ctx.fillStyle = '#0a0e27';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // 绘制星空背景
-        ctx.fillStyle = '#ffffff';
-        for (let i = 0; i < 200; i++) {
-            const x = (i * 137.508) % canvas.width;
-            const y = (i * 137.508) % canvas.height;
-            const size = Math.sin(Date.now() * 0.001 + i) * 0.5 + 1;
-            ctx.globalAlpha = Math.sin(Date.now() * 0.002 + i) * 0.3 + 0.5;
-            ctx.fillRect(x, y, size, size);
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            fontSize = window.innerWidth < 768 ? 14 : 16;
+            columns = Math.floor(canvas.width / fontSize);
+            drops = Array(columns).fill(0).map(() => Math.random() * -100);
         }
-        ctx.globalAlpha = 1;
+        resize();
+        window.addEventListener('resize', resize);
 
-        // 绘制建筑
-        buildings.forEach(building => {
-            // 建筑主体
-            const gradient = ctx.createLinearGradient(building.x, canvas.height, building.x, canvas.height - building.height);
-            gradient.addColorStop(0, building.color);
-            gradient.addColorStop(1, building.color + '80');
-            ctx.fillStyle = gradient;
-            ctx.fillRect(building.x, canvas.height - building.height, building.width, building.height);
+        function draw() {
+            // 半透明黑覆盖，形成拖尾
+            ctx.fillStyle = 'rgba(10, 10, 10, 0.08)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // 建筑轮廓光
-            ctx.strokeStyle = building.color;
-            ctx.lineWidth = 2;
-            ctx.strokeRect(building.x, canvas.height - building.height, building.width, building.height);
+            ctx.fillStyle = '#00ff41';
+            ctx.font = fontSize + 'px monospace';
 
-            // 窗户
-            ctx.fillStyle = '#00d4ff';
-            const windowRows = Math.floor(building.height / 30);
-            const windowCols = Math.floor(building.width / 15);
-            for (let row = 0; row < windowRows; row++) {
-                for (let col = 0; col < windowCols; col++) {
-                    if (Math.random() > 0.3) {
-                        ctx.globalAlpha = Math.sin(Date.now() * 0.003 + row + col) * 0.3 + 0.7;
-                        ctx.fillRect(
-                            building.x + col * 12 + 3,
-                            canvas.height - building.height + row * 25 + 5,
-                            4,
-                            8
-                        );
-                    }
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                const x = i * fontSize;
+                const y = drops[i] * fontSize;
+
+                // 头部字符亮一点（白绿），尾部暗绿
+                if (Math.random() > 0.975) {
+                    ctx.fillStyle = '#d6ffd6';
+                    ctx.fillText(text, x, y);
+                    ctx.fillStyle = '#00ff41';
+                } else {
+                    ctx.fillText(text, x, y);
                 }
+
+                // 到底部后随机重置
+                if (y > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
             }
-            ctx.globalAlpha = 1;
+            requestAnimationFrame(draw);
+        }
 
-            // 移动建筑（视差效果）
-            building.x -= building.speed;
-            if (building.x + building.width < 0) {
-                building.x = canvas.width;
-            }
-        });
-
-        // 绘制粒子
-        particles.forEach(particle => {
-            ctx.fillStyle = `rgba(0, 212, 255, ${particle.opacity})`;
-            ctx.beginPath();
-            ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-            ctx.fill();
-
-            particle.x += particle.vx;
-            particle.y += particle.vy;
-
-            if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
-            if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
-        });
-
-        animationId = requestAnimationFrame(draw);
+        draw();
     }
 
-    draw();
-    }
-    
     initCanvas();
 }
 
-// 创建鼠标点击效果
+
+// ============================================================
+// 鼠标十字准星（克制的终端风）
+// ============================================================
+function createCrosshair() {
+    const crosshair = document.createElement('div');
+    crosshair.id = 'term-crosshair';
+    document.body.appendChild(crosshair);
+
+    document.addEventListener('mousemove', (e) => {
+        crosshair.classList.add('active');
+        // 用一个伪元素难做跟随，这里直接用一个小方块定位
+        crosshair.style.left = (e.clientX - 3) + 'px';
+        crosshair.style.top = (e.clientY - 3) + 'px';
+        crosshair.style.width = '6px';
+        crosshair.style.height = '6px';
+        crosshair.style.background = 'transparent';
+        crosshair.style.border = '1px solid #00ff41';
+        crosshair.style.boxShadow = '0 0 6px rgba(0,255,65,0.5)';
+        crosshair.style.position = 'fixed';
+    });
+
+    document.addEventListener('mouseleave', () => {
+        crosshair.classList.remove('active');
+    });
+}
+
+
+// ============================================================
+// 点击涟漪 + 粒子爆炸（终端绿色）
+// ============================================================
 function createClickEffect() {
     document.addEventListener('click', (e) => {
-        // 阻止默认行为（如果有的话）
-        // e.preventDefault();
-        
-        // 创建涟漪效果
+        // 涟漪（方形）
         const ripple = document.createElement('div');
         ripple.className = 'click-ripple';
         ripple.style.left = e.clientX + 'px';
@@ -334,18 +294,18 @@ function createClickEffect() {
         ripple.style.zIndex = '99999';
         document.body.appendChild(ripple);
 
-        // 创建粒子爆炸效果
-        const particleCount = 12;
+        // 粒子爆炸
+        const particleCount = 10;
         const particles = [];
-        
+
         for (let i = 0; i < particleCount; i++) {
             const particle = document.createElement('div');
             particle.className = 'click-particle';
             const angle = (i / particleCount) * Math.PI * 2;
-            const distance = 50 + Math.random() * 30;
+            const distance = 40 + Math.random() * 30;
             const endX = e.clientX + Math.cos(angle) * distance;
             const endY = e.clientY + Math.sin(angle) * distance;
-            
+
             particle.style.left = e.clientX + 'px';
             particle.style.top = e.clientY + 'px';
             particle.style.position = 'fixed';
@@ -362,22 +322,19 @@ function createClickEffect() {
             });
         }
 
-        // 动画粒子
         function animateParticles() {
-            particles.forEach((particle, index) => {
+            particles.forEach((particle) => {
                 if (particle.progress >= 1) {
                     particle.element.remove();
                     return;
                 }
-                
-                particle.progress += 0.05;
+                particle.progress += 0.06;
                 const easeOut = 1 - Math.pow(1 - particle.progress, 3);
-                
                 const x = particle.startX + (particle.endX - particle.startX) * easeOut;
                 const y = particle.startY + (particle.endY - particle.startY) * easeOut;
                 const scale = 1 - particle.progress;
                 const opacity = 1 - particle.progress;
-                
+
                 particle.element.style.left = x + 'px';
                 particle.element.style.top = y + 'px';
                 particle.element.style.transform = `translate(-50%, -50%) scale(${scale})`;
@@ -393,6 +350,6 @@ function createClickEffect() {
 
         setTimeout(() => {
             ripple.remove();
-        }, 600);
+        }, 500);
     });
 }

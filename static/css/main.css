@@ -1,83 +1,118 @@
 @import "./styles.css";
 
 
-:root{
-    --h-title-color: #00d4ff;
-    --tech-primary: #0066ff;
-    --tech-secondary: #7c3aed;
-    --tech-accent: #00d4ff;
-    --tech-dark: #0a0e27;
-    --tech-gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --tech-gradient-2: linear-gradient(135deg, #00d4ff 0%, #0066ff 100%);
-    --tech-gradient-3: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #2d3561 100%);
+/* ============================================================
+   终端黑客风 (Terminal Hacker) 主题变量
+   ============================================================ */
+:root {
+    --term-bg:          #0a0a0a;   /* 终端黑底 */
+    --term-bg-soft:     #0f1410;   /* 稍浅黑 */
+    --term-green:       #00ff41;   /* 经典荧光绿 */
+    --term-green-dim:   #008f11;   /* 暗绿 */
+    --term-green-glow:  rgba(0, 255, 65, 0.5);
+    --term-amber:       #ffb000;   /* 琥珀色,用于强调/标题 */
+    --term-cyan:        #00d4ff;   /* 备用点缀 */
+    --term-text:        #c8d0c8;   /* 主文字色(略带绿调的灰) */
+    --term-text-dim:    #5a6a5a;   /* 次要文字 */
+    --term-border:      rgba(0, 255, 65, 0.35);
+    --term-font:        'Share Tech Mono', 'JetBrains Mono', 'Courier New', monospace;
+    --term-font-head:   'Orbitron', 'Share Tech Mono', monospace;
 }
 
+/* ============================================================
+   全局:黑底 + 等宽 + Matrix canvas 在最底层
+   ============================================================ */
 body {
-    background: transparent !important;
-    color: #e0e0e0;
+    background: var(--term-bg) !important;
+    color: var(--term-text);
+    font-family: var(--term-font) !important;
     position: relative;
     overflow-x: hidden;
     min-height: 100vh;
 }
 
-/* 移除旧的背景渐变，使用Canvas背景 */
+/* 移除旧的背景渐变 */
 body::before {
     display: none;
 }
 
-/* 确保Canvas背景在最底层 */
-#tech-city-canvas {
+/* Matrix 数字雨 canvas 固定在最底层 */
+#tech-city-canvas,
+#matrix-canvas {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     width: 100% !important;
     height: 100% !important;
-    z-index: -999 !important;
+    z-index: -2 !important;
     pointer-events: none !important;
-    background: #0a0e27 !important;
+    background: var(--term-bg) !important;
+    opacity: 0.55;
 }
 
-/* 科技感动画 */
-@keyframes glow {
-    0%, 100% {
-        text-shadow: 0 0 10px var(--tech-accent), 0 0 20px var(--tech-accent), 0 0 30px var(--tech-accent);
-    }
-    50% {
-        text-shadow: 0 0 20px var(--tech-accent), 0 0 30px var(--tech-accent), 0 0 40px var(--tech-accent);
-    }
+/* ============================================================
+   CRT 扫描线 + 微闪烁 (老式显示器质感)
+   ============================================================ */
+.crt-scanlines {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 99998;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 0px,
+        rgba(0, 0, 0, 0) 2px,
+        rgba(0, 0, 0, 0.15) 3px,
+        rgba(0, 0, 0, 0.15) 4px
+    );
+    mix-blend-mode: multiply;
 }
 
-@keyframes gradient-shift {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+.crt-flicker {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 99997;
+    background: rgba(0, 255, 65, 0.03);
+    animation: crt-flicker 0.15s infinite;
 }
 
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
+@keyframes crt-flicker {
+    0%   { opacity: 0.27; }
+    5%   { opacity: 0.34; }
+    10%  { opacity: 0.23; }
+    15%  { opacity: 0.9; }
+    20%  { opacity: 0.18; }
+    25%  { opacity: 0.83; }
+    30%  { opacity: 0.65; }
+    35%  { opacity: 0.67; }
+    40%  { opacity: 0.26; }
+    45%  { opacity: 0.84; }
+    50%  { opacity: 0.96; }
+    55%  { opacity: 0.08; }
+    60%  { opacity: 0.2; }
+    65%  { opacity: 0.71; }
+    70%  { opacity: 0.53; }
+    75%  { opacity: 0.37; }
+    80%  { opacity: 0.71; }
+    85%  { opacity: 0.7; }
+    90%  { opacity: 0.7; }
+    95%  { opacity: 0.36; }
+    100% { opacity: 0.24; }
 }
 
+/* ============================================================
+   导航栏:黑色 + 绿色发光文字
+   ============================================================ */
 .header {
-    border-bottom: solid 2px transparent;
-    background: rgba(10, 14, 39, 0.95) !important;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.1);
+    border-bottom: 1px solid var(--term-border);
+    background: rgba(10, 10, 10, 0.92) !important;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 4px 20px rgba(0, 255, 65, 0.08);
     z-index: 10000;
     transition: all 0.3s ease;
 }
 
-/* 强制覆盖所有导航栏文字颜色 */
 .header .navbar-brand,
 .header .nav-link,
 .header .navbar-brand:hover,
@@ -86,116 +121,173 @@ body::before {
 .header .nav-link:focus,
 .header .nav-link.active,
 .header .nav-link:active {
-    color: #ffffff !important;
-    transition: all 0.3s ease;
-    font-weight: 500;
+    color: var(--term-green) !important;
+    font-family: var(--term-font) !important;
     text-decoration: none;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+}
+
+.header .navbar-brand {
+    text-shadow: 0 0 8px var(--term-green-glow);
 }
 
 .header .nav-link:hover,
 .header .nav-link:focus {
-    color: var(--tech-accent) !important;
-    text-shadow: 0 0 10px var(--tech-accent);
+    color: #ffffff !important;
+    text-shadow: 0 0 10px var(--term-green);
 }
 
-/* 覆盖 Bootstrap navbar-light 的默认样式 */
 .header.navbar-light .navbar-brand,
 .header.navbar-light .navbar-nav .nav-link {
-    color: #ffffff !important;
+    color: var(--term-green) !important;
 }
 
 .header.navbar-light .navbar-nav .nav-link:hover,
 .header.navbar-light .navbar-nav .nav-link:focus {
-    color: var(--tech-accent) !important;
+    color: #ffffff !important;
 }
 
-/* 确保导航栏折叠菜单可见 */
 .header .navbar-collapse {
-    background: rgba(10, 14, 39, 0.98) !important;
+    background: rgba(10, 10, 10, 0.98) !important;
 }
 
-.header .navbar-nav {
-    background: transparent !important;
-}
-
-/* 确保导航栏在所有屏幕尺寸下都可见 */
 @media (max-width: 991.98px) {
     .header .navbar-collapse {
-        background: rgba(10, 14, 39, 0.98) !important;
-        border-top: 1px solid rgba(0, 212, 255, 0.2);
+        background: rgba(10, 10, 10, 0.98) !important;
+        border-top: 1px solid var(--term-border);
         margin-top: 0.5rem;
         padding-top: 1rem;
     }
-    
     .header .nav-link {
         padding: 0.75rem 1rem !important;
-        color: #ffffff !important;
-        border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+        color: var(--term-green) !important;
+        border-bottom: 1px solid rgba(0, 255, 65, 0.1);
     }
 }
 
-.bg-bottom {
-    background: var(--tech-gradient-3) !important;
-    position: relative;
-    overflow: hidden;
+/* 导航栏汉堡按钮 */
+.navbar-toggler {
+    border: 1px solid var(--term-border);
+    color: var(--term-green);
+    background: rgba(0, 255, 65, 0.08);
+    font-family: var(--term-font);
+    transition: all 0.2s ease;
 }
 
-.bg-bottom::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, transparent 30%, rgba(0, 212, 255, 0.1) 50%, transparent 70%);
-    background-size: 200% 200%;
-    animation: gradient-shift 8s ease infinite;
+.navbar-toggler:hover {
+    border-color: var(--term-green);
+    background: rgba(0, 255, 65, 0.15);
+    box-shadow: 0 0 12px rgba(0, 255, 65, 0.3);
 }
 
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 255, 65, 0.25);
+}
+
+/* ============================================================
+   Hero: 终端窗口
+   ============================================================ */
 .top-section {
     position: relative;
-    padding: 10rem 0;
+    padding: 8rem 0 3rem;
     background: transparent !important;
     background-image: none !important;
-    height: 25rem;
-    overflow: hidden;
+    height: auto;
+    min-height: 25rem;
+    overflow: visible;
 }
 
-.top-section::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--tech-gradient-3);
-    opacity: 0.3;
-    z-index: 0;
-}
-
+.top-section::before,
 .top-section::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-        radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 40% 20%, rgba(0, 102, 255, 0.1) 0%, transparent 50%);
-    animation: gradient-shift 15s ease infinite;
-    background-size: 200% 200%;
+    display: none;
 }
 
-.top-section h2 {
-    font-weight: 600;
-    background: var(--tech-gradient-2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: glow 3s ease-in-out infinite;
-    text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+.term-hero-title {
+    font-family: var(--term-font-head);
+    color: var(--term-green) !important;
+    text-shadow: 0 0 10px var(--term-green-glow), 0 0 25px rgba(0, 255, 65, 0.3);
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    letter-spacing: 3px;
+    margin-bottom: 1.8rem;
+    text-align: left;
+}
+
+/* 终端窗口本体 */
+.terminal-window {
+    background: rgba(8, 12, 8, 0.88);
+    border: 1px solid var(--term-green-dim);
+    border-radius: 6px;
+    box-shadow:
+        0 0 0 1px rgba(0, 255, 65, 0.1),
+        0 0 30px rgba(0, 255, 65, 0.15),
+        inset 0 0 40px rgba(0, 255, 65, 0.03);
+    overflow: hidden;
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+/* 标题栏 */
+.terminal-titlebar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.9rem;
+    background: rgba(0, 255, 65, 0.06);
+    border-bottom: 1px solid var(--term-border);
+}
+
+.term-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+.term-dot-red    { background: #ff5f56; box-shadow: 0 0 6px rgba(255, 95, 86, 0.5); }
+.term-dot-yellow { background: #ffbd2e; box-shadow: 0 0 6px rgba(255, 189, 46, 0.5); }
+.term-dot-green  { background: #27c93f; box-shadow: 0 0 6px rgba(39, 201, 63, 0.5); }
+
+.terminal-title {
+    margin-left: 0.6rem;
+    color: var(--term-text-dim);
+    font-family: var(--term-font);
+    font-size: 0.85rem;
+}
+
+/* 终端输出区 */
+.terminal-body {
+    padding: 1.2rem 1.4rem;
+    font-family: var(--term-font);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--term-text);
+    min-height: 180px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* 终端里动态生成的行 */
+.terminal-body .term-line      { display: block; }
+.terminal-body .term-prompt    { color: var(--term-green); }
+.terminal-body .term-cmd       { color: #ffffff; }
+.terminal-body .term-output    { color: var(--term-text); }
+.terminal-body .term-accent    { color: var(--term-amber); }
+.terminal-body .term-ok        { color: var(--term-green); }
+.terminal-body .term-bar-fill  { color: var(--term-green); }
+.terminal-body .term-bar-empty { color: var(--term-text-dim); }
+
+/* 闪烁光标 */
+.term-cursor {
+    color: var(--term-green);
+    animation: blink 1s steps(1) infinite;
+    text-shadow: 0 0 8px var(--term-green-glow);
+}
+
+@keyframes blink {
+    0%, 50%   { opacity: 1; }
+    51%, 100% { opacity: 0; }
 }
 
 .top-section .top-section-content {
@@ -203,28 +295,26 @@ body::before {
     z-index: 1;
 }
 
-/* 确保 Canvas 背景在最底层 */
-#tech-city-canvas {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    z-index: -2 !important;
-    pointer-events: none !important;
-}
-
+/* ============================================================
+   内容区 section
+   ============================================================ */
 section header h2 {
-    font-family: "Kanit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
-    background: var(--tech-gradient-2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-size: 2.3rem;
-    line-height: 4rem;
+    font-family: var(--term-font-head) !important;
+    color: var(--term-green) !important;
+    -webkit-text-fill-color: var(--term-green);
+    background: none;
+    font-size: 2rem;
+    line-height: 3.5rem;
     font-weight: 700;
+    letter-spacing: 2px;
     position: relative;
     display: inline-block;
+    text-shadow: 0 0 12px var(--term-green-glow);
+}
+
+section header h2::before {
+    content: "> ";
+    color: var(--term-amber);
 }
 
 section header h2::after {
@@ -233,119 +323,62 @@ section header h2::after {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 3px;
-    background: var(--tech-gradient-2);
-    border-radius: 2px;
-    box-shadow: 0 0 10px var(--tech-accent);
+    height: 2px;
+    background: linear-gradient(90deg, var(--term-green), transparent);
+    box-shadow: 0 0 8px var(--term-green);
 }
 
 section .main-body {
-    font-size: 1.3rem;
-    font-weight: 300;
-    line-height: 2.4rem;
-    color: #e0e0e0;
+    font-family: var(--term-font);
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 2rem;
+    color: var(--term-text);
+}
+
+section .main-body p {
+    color: var(--term-text);
 }
 
 section .main-body code {
-    background: rgba(0, 212, 255, 0.1);
-    color: var(--tech-accent);
-    padding: 0.2em 0.4em;
-    border-radius: 4px;
-    border: 1px solid rgba(0, 212, 255, 0.3);
-    font-family: 'Courier New', monospace;
-    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+    background: rgba(0, 255, 65, 0.08);
+    color: var(--term-green);
+    padding: 0.1em 0.45em;
+    border-radius: 3px;
+    border: 1px solid var(--term-border);
+    font-family: var(--term-font);
+    box-shadow: 0 0 8px rgba(0, 255, 65, 0.12);
 }
 
 section .main-body strong {
-    color: var(--tech-accent);
-    font-weight: 600;
-}
-
-/* 技能圆圈展示 - 炫酷风格 */
-.skills-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin: 2rem 0;
-    justify-content: center;
-}
-
-.skill-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(0, 212, 255, 0.2) 0%, rgba(0, 102, 255, 0.1) 100%);
-    border: 2px solid var(--tech-accent);
-    color: var(--tech-accent);
+    color: var(--term-amber);
     font-weight: 700;
-    font-size: 0.9rem;
-    text-transform: uppercase;
+    text-shadow: 0 0 6px rgba(255, 176, 0, 0.4);
+}
+
+section .main-body h4 {
+    color: var(--term-cyan);
+    font-family: var(--term-font);
     letter-spacing: 1px;
-    position: relative;
-    transition: all 0.3s ease;
-    box-shadow: 
-        0 0 20px rgba(0, 212, 255, 0.3),
-        inset 0 0 20px rgba(0, 212, 255, 0.1);
-    animation: skill-glow 3s ease-in-out infinite;
 }
 
-.skill-badge::before {
-    content: "";
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    border-radius: 50%;
-    background: var(--tech-gradient-2);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: -1;
-    filter: blur(10px);
+section .main-body ul li::marker {
+    color: var(--term-green);
 }
 
-.skill-badge:hover {
-    transform: scale(1.15) rotate(5deg);
-    box-shadow: 
-        0 0 30px rgba(0, 212, 255, 0.6),
-        0 0 60px rgba(0, 102, 255, 0.4),
-        inset 0 0 30px rgba(0, 212, 255, 0.2);
-    border-color: #ffffff;
+section .main-body ul li {
+    margin-bottom: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+section .main-body ul li:hover {
+    padding-left: 6px;
     color: #ffffff;
 }
 
-.skill-badge:hover::before {
-    opacity: 0.8;
-}
-
-@keyframes skill-glow {
-    0%, 100% {
-        box-shadow: 
-            0 0 20px rgba(0, 212, 255, 0.3),
-            inset 0 0 20px rgba(0, 212, 255, 0.1);
-    }
-    50% {
-        box-shadow: 
-            0 0 30px rgba(0, 212, 255, 0.5),
-            inset 0 0 30px rgba(0, 212, 255, 0.2);
-    }
-}
-
-/* 技能圆圈延迟动画 */
-.skill-badge:nth-child(1) { animation-delay: 0s; }
-.skill-badge:nth-child(2) { animation-delay: 0.3s; }
-.skill-badge:nth-child(3) { animation-delay: 0.6s; }
-.skill-badge:nth-child(4) { animation-delay: 0.9s; }
-.skill-badge:nth-child(5) { animation-delay: 1.2s; }
-.skill-badge:nth-child(6) { animation-delay: 1.5s; }
-.skill-badge:nth-child(7) { animation-delay: 1.8s; }
-.skill-badge:nth-child(8) { animation-delay: 2.1s; }
-.skill-badge:nth-child(9) { animation-delay: 2.4s; }
-
-.bg-gradient-primary-to-secondary-light {
+/* section 背景:轻微渐变 + 边框分隔 */
+.bg-gradient-primary-to-secondary-light,
+.bg-gradient-primary-to-secondary-dark {
     background: transparent !important;
     position: relative;
 }
@@ -353,93 +386,66 @@ section .main-body strong {
 .bg-gradient-primary-to-secondary-light::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        radial-gradient(circle at 10% 20%, rgba(0, 212, 255, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.05) 0%, transparent 50%);
+    inset: 0;
+    background: radial-gradient(circle at 15% 20%, rgba(0, 255, 65, 0.04) 0%, transparent 50%);
     pointer-events: none;
     z-index: 0;
-}
-
-.bg-gradient-primary-to-secondary-dark {
-    background: transparent !important;
-    position: relative;
 }
 
 .bg-gradient-primary-to-secondary-dark::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        radial-gradient(circle at 20% 30%, rgba(0, 102, 255, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(124, 58, 237, 0.08) 0%, transparent 50%);
+    inset: 0;
+    background: radial-gradient(circle at 85% 70%, rgba(255, 176, 0, 0.04) 0%, transparent 50%);
     pointer-events: none;
 }
 
 .bg-gradient-primary-to-secondary-gray {
-    background: linear-gradient(45deg, #f0f0f0, #f1f1f1) !important;
+    background: var(--term-bg-soft) !important;
 }
-
-
 
 .on-top {
     position: relative;
     z-index: 10000;
 }
 
-.top-bg {
-    background-position: center;
-    background-size: fill;
-    width: 100%;
-    height: 100%;
+.container {
+    position: relative;
+    z-index: 1;
 }
 
-.top-bg::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-}
-
-
+/* ============================================================
+   头像
+   ============================================================ */
 #avatar {
     position: relative;
     height: 0;
-    top:min(-65px,max(-100px,calc(-1*100vw/12)));
+    top: min(-65px, max(-100px, calc(-1*100vw/12)));
     max-width: 55em;
     margin: 0 1.5rem 0 0;
     float: right;
     z-index: 9000;
-    animation: float 6s ease-in-out infinite;
 }
 
 #avatar img {
-    height: max(130px,min(200px,calc(100vw/6)));
-    box-shadow: 
-        0 0 20px rgba(0, 212, 255, 0.5),
-        0 0 40px rgba(0, 102, 255, 0.3),
-        0 0 60px rgba(124, 58, 237, 0.2);
-    border: 3px solid rgba(0, 212, 255, 0.3);
-    border-radius: 50%;
+    height: max(130px, min(200px, calc(100vw/6)));
+    box-shadow:
+        0 0 15px rgba(0, 255, 65, 0.4),
+        0 0 35px rgba(0, 255, 65, 0.2);
+    border: 2px solid var(--term-green-dim);
+    border-radius: 8px;
     transition: all 0.3s ease;
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(124, 58, 237, 0.1));
+    background: var(--term-bg-soft);
+    /* SVG 头像反色处理:让它适配黑底 */
+    filter: invert(0.92) hue-rotate(50deg) brightness(1.1);
 }
 
 #avatar img:hover {
-    box-shadow: 
-        0 0 30px rgba(0, 212, 255, 0.8),
-        0 0 60px rgba(0, 102, 255, 0.5),
-        0 0 90px rgba(124, 58, 237, 0.3);
+    box-shadow:
+        0 0 25px rgba(0, 255, 65, 0.7),
+        0 0 50px rgba(0, 255, 65, 0.4);
     transform: scale(1.05);
+    border-color: var(--term-green);
 }
 
 @media screen and (max-width: 991px) {
@@ -448,75 +454,95 @@ section .main-body strong {
     }
 }
 
-/* 科技感滚动条 */
-::-webkit-scrollbar {
-    width: 10px;
+/* ============================================================
+   技能徽章:终端模块标签风
+   ============================================================ */
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 1.5rem 0;
+    justify-content: flex-start;
 }
 
-::-webkit-scrollbar-track {
-    background: var(--tech-dark);
+.skill-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    min-width: 70px;
+    height: 38px;
+    padding: 0 0.9rem;
+    border-radius: 4px;          /* 方块化,不再是圆 */
+    background: rgba(0, 255, 65, 0.05);
+    border: 1px solid var(--term-green-dim);
+    color: var(--term-green);
+    font-family: var(--term-font);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    position: relative;
+    transition: all 0.2s ease;
+    box-shadow: inset 0 0 12px rgba(0, 255, 65, 0.08);
+    animation: none;            /* 取消旧的脉冲 */
 }
 
-::-webkit-scrollbar-thumb {
-    background: var(--tech-gradient-2);
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+.skill-badge::before {
+    content: "";
+    display: none;              /* 取消旧的模糊光圈 */
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: var(--tech-gradient-1);
+.skill-badge:hover {
+    transform: translate(-2px, -2px);
+    background: var(--term-green);
+    color: var(--term-bg);
+    border-color: var(--term-green);
+    box-shadow:
+        3px 3px 0 var(--term-green-dim),
+        0 0 18px rgba(0, 255, 65, 0.5);
+    text-shadow: none;
 }
 
-/* 链接科技感样式 */
-a {
-    color: var(--tech-accent);
-    transition: all 0.3s ease;
-    text-decoration: none;
+/* ============================================================
+   Footer
+   ============================================================ */
+.bg-bottom {
+    background: var(--term-bg-soft) !important;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid var(--term-border);
 }
 
-a:hover {
-    color: #ffffff;
-    text-shadow: 0 0 10px var(--tech-accent);
+.bg-bottom::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(0, 255, 65, 0.05) 50%, transparent 70%);
+    background-size: 200% 200%;
+    animation: gradient-shift 8s ease infinite;
 }
 
-/* 代码块增强 */
-code {
-    transition: all 0.3s ease;
+@keyframes gradient-shift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
-code:hover {
-    background: rgba(0, 212, 255, 0.2) !important;
-    box-shadow: 0 0 15px rgba(0, 212, 255, 0.4) !important;
-}
-
-/* 列表项科技感 */
-.main-body ul li::marker {
-    color: var(--tech-accent);
-}
-
-.main-body ul li {
-    margin-bottom: 0.5rem;
-    transition: all 0.3s ease;
-}
-
-.main-body ul li:hover {
-    padding-left: 5px;
-    color: #ffffff;
-}
-
-/* Footer 科技感样式 */
 footer {
     position: relative;
     z-index: 1;
 }
 
 footer .text-white-50 {
-    color: rgba(224, 224, 224, 0.8) !important;
+    color: var(--term-text-dim) !important;
+    font-family: var(--term-font);
 }
 
 footer a {
-    color: var(--tech-accent) !important;
-    transition: all 0.3s ease;
+    color: var(--term-green) !important;
+    font-family: var(--term-font);
+    transition: all 0.2s ease;
     text-decoration: none;
     position: relative;
 }
@@ -528,13 +554,13 @@ footer a::after {
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--tech-gradient-2);
-    transition: width 0.3s ease;
+    background: var(--term-green);
+    transition: width 0.2s ease;
 }
 
 footer a:hover {
     color: #ffffff !important;
-    text-shadow: 0 0 10px var(--tech-accent);
+    text-shadow: 0 0 8px var(--term-green);
 }
 
 footer a:hover::after {
@@ -542,126 +568,102 @@ footer a:hover::after {
 }
 
 footer span {
-    color: rgba(224, 224, 224, 0.5);
+    color: var(--term-text-dim);
 }
 
-/* 导航栏按钮科技感样式 */
-.navbar-toggler {
-    border: 1px solid rgba(0, 212, 255, 0.3);
+/* ============================================================
+   链接 / 滚动条 / 代码块
+   ============================================================ */
+a {
+    color: var(--term-green);
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+a:hover {
     color: #ffffff;
-    background: rgba(0, 212, 255, 0.1);
-    transition: all 0.3s ease;
+    text-shadow: 0 0 8px var(--term-green);
 }
 
-.navbar-toggler:hover {
-    border-color: var(--tech-accent);
-    background: rgba(0, 212, 255, 0.2);
-    box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+code {
+    transition: all 0.2s ease;
 }
 
-.navbar-toggler:focus {
-    box-shadow: 0 0 0 0.25rem rgba(0, 212, 255, 0.25);
+code:hover {
+    background: rgba(0, 255, 65, 0.15) !important;
+    box-shadow: 0 0 12px rgba(0, 255, 65, 0.35) !important;
 }
 
-/* 确保所有文本在深色背景下清晰可见 */
-.container {
-    position: relative;
-    z-index: 1;
+::-webkit-scrollbar {
+    width: 10px;
 }
 
-/* 标题和副标题增强 */
-#top-section-bg-text {
-    font-weight: 700 !important;
-    letter-spacing: 2px;
+::-webkit-scrollbar-track {
+    background: var(--term-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--term-green-dim);
+    border-radius: 0;
+    box-shadow: 0 0 8px rgba(0, 255, 65, 0.4);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--term-green);
+}
+
+/* 选中文字颜色 */
+::selection {
+    background: var(--term-green);
+    color: var(--term-bg);
+}
+::-moz-selection {
+    background: var(--term-green);
+    color: var(--term-bg);
 }
 
 #home-subtitle {
-    color: var(--tech-accent) !important;
-    font-weight: 600;
-    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+    color: var(--term-amber) !important;
+    font-family: var(--term-font);
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(255, 176, 0, 0.4);
 }
 
-/* 鼠标跟随效果 - 主跟随元素 */
-#mouse-follower {
+/* ============================================================
+   鼠标十字准星 (克制的终端风指针)
+   ============================================================ */
+#term-crosshair {
     position: fixed;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: radial-gradient(circle, var(--tech-accent) 0%, transparent 70%);
-    box-shadow: 
-        0 0 20px var(--tech-accent),
-        0 0 40px rgba(0, 212, 255, 0.5),
-        0 0 60px rgba(0, 212, 255, 0.3);
     pointer-events: none;
     z-index: 9999;
     opacity: 0;
-    transition: opacity 0.3s ease, transform 0.3s ease, width 0.3s ease, height 0.3s ease;
-    transform: translate(-50%, -50%);
-    mix-blend-mode: screen;
+    transition: opacity 0.2s ease;
 }
 
-/* 鼠标跟随粒子 */
-.mouse-particle {
+#term-crosshair.active {
+    opacity: 0.5;
+}
+
+#term-crosshair::before,
+#term-crosshair::after {
+    content: "";
     position: fixed;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(0, 212, 255, 0.8) 0%, transparent 70%);
-    box-shadow: 
-        0 0 10px rgba(0, 212, 255, 0.6),
-        0 0 20px rgba(0, 212, 255, 0.3);
-    pointer-events: none;
-    z-index: 9998;
-    opacity: 0;
-    transition: opacity 0.3s ease, transform 0.3s ease, width 0.3s ease, height 0.3s ease;
-    transform: translate(-50%, -50%);
-    mix-blend-mode: screen;
+    background: var(--term-green);
+    box-shadow: 0 0 6px var(--term-green-glow);
 }
 
-/* 鼠标跟随效果 - 悬停状态 */
-#mouse-follower.hover {
-    width: 40px;
-    height: 40px;
-    background: radial-gradient(circle, var(--tech-accent) 0%, rgba(0, 102, 255, 0.5) 50%, transparent 80%);
-    box-shadow: 
-        0 0 30px var(--tech-accent),
-        0 0 60px rgba(0, 212, 255, 0.8),
-        0 0 90px rgba(0, 102, 255, 0.5);
-    animation: pulse 1.5s ease-in-out infinite;
-}
-
-.mouse-particle.hover {
-    width: 12px;
-    height: 12px;
-    background: radial-gradient(circle, rgba(0, 212, 255, 1) 0%, rgba(0, 102, 255, 0.6) 50%, transparent 80%);
-    box-shadow: 
-        0 0 15px rgba(0, 212, 255, 0.8),
-        0 0 30px rgba(0, 212, 255, 0.5);
-}
-
-/* 脉冲动画 */
-@keyframes pulse {
-    0%, 100% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0.8;
-    }
-    50% {
-        transform: translate(-50%, -50%) scale(1.2);
-        opacity: 1;
-    }
-}
-
-/* 鼠标点击涟漪效果 */
+/* 点击涟漪:终端化绿色方框扩散 */
 .click-ripple {
     position: fixed !important;
     width: 10px;
     height: 10px;
-    border-radius: 50%;
-    border: 2px solid var(--tech-accent);
+    border: 2px solid var(--term-green);
     pointer-events: none !important;
     z-index: 99999 !important;
     transform: translate(-50%, -50%);
-    animation: ripple 0.6s ease-out forwards;
+    border-radius: 0;            /* 方形而非圆形 */
+    animation: ripple 0.5s ease-out forwards;
 }
 
 @keyframes ripple {
@@ -669,36 +671,42 @@ footer span {
         width: 10px;
         height: 10px;
         opacity: 1;
-        box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.7);
+        box-shadow: 0 0 0 0 rgba(0, 255, 65, 0.7);
     }
     100% {
-        width: 200px;
-        height: 200px;
+        width: 180px;
+        height: 180px;
         opacity: 0;
-        box-shadow: 0 0 0 50px rgba(0, 212, 255, 0);
+        box-shadow: 0 0 0 40px rgba(0, 255, 65, 0);
     }
 }
 
-/* 鼠标点击粒子爆炸效果 */
 .click-particle {
     position: fixed !important;
     width: 6px;
     height: 6px;
-    border-radius: 50%;
-    background: var(--tech-accent) !important;
-    box-shadow: 0 0 10px var(--tech-accent);
+    background: var(--term-green) !important;
+    box-shadow: 0 0 8px var(--term-green);
     pointer-events: none !important;
     z-index: 99999 !important;
     transform: translate(-50%, -50%);
+    border-radius: 0;
     opacity: 1;
 }
 
-/* 移动设备上隐藏鼠标跟随效果 */
+/* 移动设备隐藏指针特效 */
 @media (hover: none) and (pointer: coarse) {
-    #mouse-follower,
-    .mouse-particle {
+    #term-crosshair {
         display: none;
     }
 }
 
-
+/* Markdown 里的徽章图(shields.io)反色适配 */
+.main-body img[alt] {
+    filter: invert(0.9) hue-rotate(50deg) brightness(1.05);
+    opacity: 0.9;
+    transition: all 0.2s ease;
+}
+.main-body img[alt]:hover {
+    opacity: 1;
+}
