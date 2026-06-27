@@ -96,21 +96,50 @@
         </div>
     </nav>
 
-    <!-- Top Section: 终端窗口 -->
+    <!-- Top Section: 终端窗口 + 系统监控 (非对称布局) -->
     <section class="top-section">
         <div class="top-section-content">
             <div class="container px-5">
                 <h2 id="top-section-bg-text" class="term-hero-title"></h2>
-                <div class="terminal-window">
-                    <div class="terminal-titlebar">
-                        <span class="term-dot term-dot-red"></span>
-                        <span class="term-dot term-dot-yellow"></span>
-                        <span class="term-dot term-dot-green"></span>
-                        <span class="terminal-title">peng.liu@hpc: ~/profile</span>
+                <div class="hero-grid">
+                    <div class="terminal-window">
+                        <span class="corner corner-tl"></span>
+                        <span class="corner corner-tr"></span>
+                        <span class="corner corner-bl"></span>
+                        <span class="corner corner-br"></span>
+                        <div class="terminal-titlebar">
+                            <span class="term-dot term-dot-red"></span>
+                            <span class="term-dot term-dot-yellow"></span>
+                            <span class="term-dot term-dot-green"></span>
+                            <span class="terminal-title">peng.liu@hpc: ~/profile</span>
+                        </div>
+                        <div class="terminal-body" id="terminal-output">
+                            <span class="term-cursor">&#9608;</span>
+                        </div>
                     </div>
-                    <div class="terminal-body" id="terminal-output">
-                        <span class="term-cursor">&#9608;</span>
-                    </div>
+                    <aside class="sys-monitor" aria-hidden="true">
+                        <div class="sys-header">&gt; SYSTEM STATUS</div>
+                        <div class="sys-row">
+                            <span class="sys-label">CPU</span>
+                            <span class="sys-bar"><span class="sys-bar-fill" style="width:78%"></span></span>
+                            <span class="sys-val">78%</span>
+                        </div>
+                        <div class="sys-row">
+                            <span class="sys-label">MEM</span>
+                            <span class="sys-bar"><span class="sys-bar-fill" style="width:62%"></span></span>
+                            <span class="sys-val">62%</span>
+                        </div>
+                        <div class="sys-row">
+                            <span class="sys-label">GPU</span>
+                            <span class="sys-bar"><span class="sys-bar-fill sys-bar-amber" style="width:91%"></span></span>
+                            <span class="sys-val">91%</span>
+                        </div>
+                        <div class="sys-row sys-row-stat">
+                            <span class="sys-dot-live"></span> ONLINE
+                            &nbsp;·&nbsp; UPTIME 99.98%
+                        </div>
+                        <div class="sys-foot">NODE-01 · CLUSTER OK</div>
+                    </aside>
                 </div>
             </div>
         </div>
@@ -164,6 +193,8 @@
     <!-- CRT 扫描线叠加层 -->
     <div class="crt-scanlines" aria-hidden="true"></div>
     <div class="crt-flicker" aria-hidden="true"></div>
+    <div class="crt-vignette" aria-hidden="true"></div>
+    <div class="crt-noise" aria-hidden="true"></div>
 
 </body>
 
