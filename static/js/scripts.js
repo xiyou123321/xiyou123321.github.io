@@ -198,8 +198,8 @@ function createMatrixRain() {
             return;
         }
 
-        // 数字雨字符集（日文片假名 + 数字 + 符号，经典 Matrix 感）
-        const chars = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピ0123456789{}[]<>/$#&%@'.split('');
+        // 数字雨字符集：二进制 0/1 为主 + 少量数字与符号
+        const chars = '0101010101010123456789{}[]<>/$#&%@'.split('');
 
         let fontSize = 16;
         let columns = 0;
